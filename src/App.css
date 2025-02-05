@@ -4,14 +4,14 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* Custom styles */
 #root {
   max-width: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
 }
-
+/* Global styles */
 .game-container {
   background: linear-gradient(135deg, rgba(2, 64, 80, 0.88), rgba(3, 169, 244, 0.88));
   max-width: 100vw;
@@ -24,17 +24,18 @@
   gap: 1rem;
 }
 
+/* Game title */
 h1 {
   color: rgba(228, 159, 120, 0.9);
   margin-bottom: 1rem;
 }
-
+/* Instructions */
 .instructions {
   font-size: 1.2rem;
   color: rgba(1, 6, 29, 0.7);
   margin-bottom: 1rem;
 }
-
+ /* Color box */
 .color-box {
   width: 500px;
   height: 200px;
@@ -43,7 +44,7 @@ h1 {
   margin: 1rem 0;
   transition: all 0.3s ease;
 }
-
+ /* Game status */
 .game-status {
   font-size: 1.5rem;
   font-weight: bold;
@@ -51,19 +52,21 @@ h1 {
   opacity: 0;
   transition: opacity 0.3s ease;s
 }
-
+/* Show game status when not empty */
 .game-status:not(:empty) {
   opacity: 1;
 }
-
+/* Game status colors */
 .game-status.correct {
   color: rgba(18, 5, 48, 0.36);
 }
 
+  /* Game status colors */
 .game-status.wrong {
   color: rgba(68, 3, 3, 0.8);
 }
 
+/* Score container */
 .score-container {
   font-size: 1.5rem;
   color: rgba(1, 6, 29, 0.7);
