@@ -1,12 +1,14 @@
 import { useState, useCallback, useEffect } from 'react'
 import './App.css'
 
+// List of colors to choose from
 const COLORS = [
   'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black'
 ];
+// Maximum attempts allowed
 const MAX_ATTEMPTS = 2;
 
-
+// Main App component
 function App() {
   const [targetColor, setTargetColor] = useState('');
   const [options, setOptions] = useState([]);
@@ -15,6 +17,7 @@ function App() {
   const [attempts, setAttempts] = useState(MAX_ATTEMPTS);
   const [isGameOver, setIsGameOver] = useState(false);
 
+  // Generate a new game
   const generateNewGame = useCallback(() => {
     const SORT = [...COLORS].sort(() =>  Math.random()- 0.5);
     const selected = SORT.slice(0, 9);
@@ -25,7 +28,7 @@ function App() {
     setAttempts(MAX_ATTEMPTS);
     setIsGameOver(false);
   }, []);
-
+ // Handle the game over state
   const handleGameOver = () => {
     setIsGameOver(true);
     setGameStatus(`Game Over : Your Final Score: ${score}`);
@@ -36,6 +39,7 @@ function App() {
     generateNewGame();
   }, [generateNewGame]);
 
+  // Handle the user's guess
   const handleGuess = (color) => {
     if (isGameOver) return;
     if (color === targetColor) {
@@ -56,50 +60,53 @@ function App() {
   };
 
   return (
+    // Main game container
     <div className="game-container">
-    <h1>Color Guessing Game</h1>
-    
-    <p data-testid="gameInstructions" className="instructions">
-      Try to guess which color matches the box below! Each Guess You have {attempts} {attempts === 1 ? 'try' : 'tries'} .
-    </p>
-    
-    <div 
-      data-testid="colorBox" 
-      className="color-box"
-      style={{ backgroundColor: targetColor }}
-    ></div>
-    
-    <p data-testid="gameStatus" className={`game-status ${gameStatus.toLowerCase().includes('correct') ? 'correct' : 'wrong'}`}>
-      {gameStatus}
-    </p>
-    
-    <div className="score-container">
-      <span>Score: </span>
-      <span data-testid="score">{score}</span>
+      <h1>Color Guessing Game</h1>
+
+      {/* Game instructions */}
+      <p data-testid="gameInstructions" className="instructions">
+        Try to guess which color matches the box below! Each Guess You have {attempts} {attempts === 1 ? 'try' : 'tries'}.
+      </p>
+      
+      {/* Color box and game status */}
+      <div 
+        data-testid="colorBox" 
+        className="color-box"
+        style={{ backgroundColor: targetColor }}
+      ></div>
+      
+      <p data-testid="gameStatus" className={`game-status ${gameStatus.toLowerCase().includes('correct') ? 'correct' : 'wrong'}`}>
+        {gameStatus}
+      </p>
+      {/* Score display */}
+      <div className="score-container">
+        <span>Score: </span>
+        <span data-testid="score">{score}</span>
+      </div>
+      
+      {/* Color options */}
+      <div className="color-options">
+        {options.map((color, index) => (
+          <button
+            key={index}
+            data-testid="colorOption"
+            className="color-button"
+            style={{ backgroundColor: color }}
+            onClick={() => handleGuess(color)}
+            disabled={isGameOver}
+          />
+        ))}
+      </div>
+      {/* New game button */}
+      <button 
+        data-testid="newGameButton"
+        className="new-game-button"
+        onClick={generateNewGame}
+      >
+        {isGameOver ? 'Try Again' : 'New Game'}
+      </button>
     </div>
-    
-    <div className="color-options">
-      {options.map((color, index) => (
-        <button
-          key={index}
-          data-testid="colorOption"
-          className="color-button"
-          style={{ backgroundColor: color }}
-          onClick={() => handleGuess(color)}
-          disabled={isGameOver}
-        />
-      ))}
-    </div>
-    
-    <button 
-      data-testid="newGameButton"
-      className="new-game-button"
-      onClick={generateNewGame}
-    >
-      {isGameOver ? 'Try Again' : 'New Game'}
-    </button>
-  </div>
-  
   );
 }
 
